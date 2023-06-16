@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+</head>
+<body>
+    <h1>Appointments</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Consulting Room</th>
+            <th>Doctor</th>
+            <th>Appointment Time</th>
+            <th>Patient Name</th>
+            <th>Actions</th>
+        </tr>
+        <th:block th:each="appointment : ${appointments}">
+            <tr>
+                <td th:text="${appointment.id}"></td>
+                <td th:text="${appointment.consultingRoom.roomNumber}"></td>
+                <td th:text="${appointment.doctor.name}"></td>
+                <td>
+                    <span th:text="${#temporals.format(appointment.appointmentTime, 'yyyy-MM-dd HH:mm')}"></span>
+                    <span th:if="${appointment.appointmentTime.isBefore(#temporals.createNow())}"> (Past)</span>
+                </td>
+                <td>
+                    <span th:text="${appointment.patientName}"></span>
+                    <span th:if="${appointment.appointmentTime.isBefore(#temporals.createNow())}"> (Read-Only)</span>
+                </td>
+                <td>
+                  <th:block th:if="${appointment.appointmentTime.isAfter(#temporals.createNow())}">
+                    <a th:href="@{/appointments/{id}(id=${appointment.id})}">Edit</a>
+                  </th:block>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <a th:href="@{/new}">Create Appointment</a>
+</body>
+</html>

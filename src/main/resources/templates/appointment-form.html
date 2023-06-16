@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Create Appointment</title>
+</head>
+<body>
+    <h1>Create Appointment</h1>
+    <form method="post" action="#" th:action="@{/appointments}" th:object="${appointment}">
+        <input type="hidden" th:field="*{id}">
+        <label for="consultingRoom">Consulting Room:</label>
+        <select id="consultingRoom" name="consultingRoom.id" th:field="*{consultingRoom.id}">
+            <option value="">--Select a consulting room--</option>
+            <!-- Iterate over consulting room options and display each as an option tag -->
+            <th:block th:each="room : ${rooms}">
+                <option th:value="${room.id}" th:text="${room.name}"></option>
+            </th:block>
+        </select>
+        <br>
+        <label for="doctor">Doctor:</label>
+        <select id="doctor" name="doctor.id" th:field="*{doctor.id}">
+            <option value="">--Select a doctor--</option>
+            <!-- Iterate over doctor options and display each as an option tag -->
+            <th:block th:each="doc : ${doctors}">
+                <option th:value="${doc.id}" th:text="${doc.name}"></option>
+            </th:block>
+        </select>
+        <br>
+        <label for="appointmentTime">Appointment Time:</label>
+        <input id="appointmentTime" type="datetime-local" name="appointmentTime" th:field="*{appointmentTime}">
+        <br>
+        <label for="patientName">Patient Name:</label>
+        <input id="patientName" type="text" name="patientName" th:field="*{patientName}">
+        <br>
+        <input type="submit" value="Create">
+    </form>
+</body>
+</html>
